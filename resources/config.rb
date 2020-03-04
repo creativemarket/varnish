@@ -7,7 +7,7 @@ property :start_on_boot, [TrueClass, FalseClass], default: true
 property :max_open_files, Integer, default: 131_072
 property :max_locked_memory, Integer, default: 82_000
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
-property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1], default: lazy {
+property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 6.0], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 
@@ -23,10 +23,10 @@ property :user, String, default: 'varnish'
 property :group, String, default: 'varnish'
 property :ccgroup, [String, nil]
 property :ttl, Integer, default: 120
-property :storage, String, default: 'file', equal_to: %w(file malloc)
+property :storage, String, default: 'malloc', equal_to: %w(file malloc)
 property :file_storage_path, String, default: '/var/lib/varnish/%s_storage.bin'
 property :file_storage_size, String, default: '1GB'
-property :malloc_percent, [Integer, nil], default: 33
+property :malloc_percent, [Integer, nil], default: 75
 property :malloc_size, [String, nil]
 property :parameters, Hash, default:
     {
@@ -46,11 +46,7 @@ action :configure do
 
   template '/etc/varnish/varnish.params' do
     action :create
-    variables(
-      major_version: new_resource.major_version,
-      malloc_size: new_resource.malloc_size || malloc_default,
-      config: new_resource
-    )
+    variables(config: new_resource)
     cookbook 'varnish'
     only_if { node['init_package'] == 'systemd' }
   end
@@ -89,13 +85,7 @@ action :configure do
       config: new_resource
     )
     only_if { node['init_package'] == 'systemd' }
-    only_if { platform_family?('debian') }
-  end
-
-  execute 'generate secret file' do
-    command "dd if=/dev/random of=#{new_resource.path_to_secret} count=1"
-    creates new_resource.path_to_secret
-    only_if { new_resource.major_version >= 6.1 }
+    only_if { node['platform_family'] == 'debian' }
   end
 
   template new_resource.conf_path do

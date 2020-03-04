@@ -5,7 +5,7 @@ property :logrotate, [TrueClass, FalseClass], default: lazy { log_format == 'var
 property :logrotate_path, String, default: '/etc/logrotate.d'
 property :instance_name, String, default: VarnishCookbook::Helpers.hostname
 
-property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 5.0, 5.1, 5.2, 6.0, 6.1], default: lazy {
+property :major_version, Float, equal_to: [3.0, 4.0, 4.1, 5, 6.0], default: lazy {
   VarnishCookbook::Helpers.installed_major_version
 }
 
@@ -42,7 +42,7 @@ action :configure do
   link "/etc/sysconfig/#{new_resource.log_format}" do
     to "/etc/default/#{new_resource.log_format}"
     only_if { node['init_package'] == 'init' }
-    only_if { platform_family?('rhel') }
+    only_if { node['platform_family'] == 'rhel' }
   end
 
   template "init_#{new_resource.log_format}" do

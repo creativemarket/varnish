@@ -1,31 +1,11 @@
-# Varnish Changelog
+# varnish Cookbook CHANGELOG
 
-All notable changes to this project will be documented in this file.
-
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-
-## [Unreleased]
-
-### Added
-
-### Changed
-
-- Updated the yum_repository resource to use the newer baseurl property instead of the legacy url property
-- Migrated to actions
-
-### Deprecated
-
-### Removed
-
-## v4.0.2
-
-- Test using CircleCI
+This file is used to list changes made in each version of the varnish cookbook.
 
 ## v4.0.1
 
 - Adds support for Varnish 3 and 4.0 on CentOS 7
-- Adds support for Varnish 4.0 and 4.1 on Ubuntu 1604
+- Adds support for Varnish 4.0 and 4.1 on Ubuntu 1604 
 
 ## v4.0.0
 

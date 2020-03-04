@@ -5,7 +5,7 @@ module VarnishCookbook
   module Helpers
     extend Chef::Mixin::ShellOut
 
-    # rubocop:disable Style/ModuleFunction
+    # rubocop:disable ModuleFunction
     extend self # Stubbing with module_function doesn't seem to work
 
     def installed_major_version
@@ -20,7 +20,7 @@ module VarnishCookbook
       version_found = matches && matches[0] && matches[1]
       raise "Cannot parse varnish version from #{cmd_stdout}" unless version_found
 
-      matches[1].to_f
+      return matches[1].to_f
     rescue => ex
       Chef::Log.warn 'Unable to run varnishd to get version.'
       raise ex
