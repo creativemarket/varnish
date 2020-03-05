@@ -1,8 +1,5 @@
 # varnish Cookbook
 
-[![Build Status](https://travis-ci.org/sous-chefs/varnish.svg?branch=master)](https://travis-ci.org/sous-chefs/varnish)
-[![Cookbook Version](https://img.shields.io/cookbook/v/varnish.svg)](https://supermarket.chef.io/cookbooks/varnish)
-
 Configures varnish.
 
 ## Requirements
