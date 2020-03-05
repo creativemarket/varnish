@@ -1,5 +1,5 @@
 # Cookbook Name:: varnish
-# Recipe:: default
+# Recipe:: configure
 #
 # Copyright 2008-2009, Joe Williams <joe@joetify.com>
 # Copyright 2014. Patrick Connolly <patrick@myplanetdigital.com>
